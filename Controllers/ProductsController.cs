@@ -1,4 +1,5 @@
-﻿using Interview.Models;
+﻿using Interview.DTOs;
+using Interview.Models;
 using Interview.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,20 +26,42 @@ namespace Interview.Controllers
         public async Task<ActionResult<Product>> GetProductById(int id)
         {
             var product = await _repository.GetProductByIdAsync(id);
-            if (product == null) return NotFound();
+            if (product == null) 
+            {
+                return NotFound();
+            }
             return product;
         }
 
         [HttpPost]
-        public async Task<ActionResult<Product>> CreateProduct(Product product)
+        public async Task<ActionResult<Product>> CreateProduct([FromBody] ProductCreateDto dto)
         {
+            if (string.IsNullOrWhiteSpace(dto.ProductName))
+            {
+                return BadRequest("ProductName為必填");
+            }
+
+            var product = new Product 
+            { 
+                ProductName = dto.ProductName,
+                UnitPrice = dto.UnitPrice,
+                UnitsInStock = dto.UnitsInStock
+            };
+
             var created = await _repository.CreateProductAsync(product);
             return CreatedAtAction(nameof(GetProductById), new { id = created.ProductId }, created);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProduct(int id, Product product)
+        public async Task<IActionResult> UpdateProduct(int id, [FromBody] ProductCreateDto dto)
         {
+            var product = new Product
+            {
+                ProductName = dto.ProductName,
+                UnitPrice = dto.UnitPrice,
+                UnitsInStock = dto.UnitsInStock
+            };
+
             if (id != product.ProductId) 
             {
                 return BadRequest();

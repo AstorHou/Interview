@@ -1,8 +1,7 @@
-﻿namespace Interview.Models
+﻿namespace Interview.DTOs
 {
-    public class Product
+    public class ProductCreateDto
     {
-        public int ProductId { get; set; }
         public string ProductName { get; set; } = String.Empty;
         public decimal? UnitPrice { get; set; }
         public short? UnitsInStock { get; set; }

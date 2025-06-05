@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Interview.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[Controller]")]
     public class ProductsController : ControllerBase
     {
         private readonly IProductRepository _repository;

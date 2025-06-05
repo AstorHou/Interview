@@ -12,7 +12,7 @@ namespace Interview.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>()
-                .Property(p => p.ProductId)
+                .Property(p => p.ProductID)
                 .ValueGeneratedOnAdd();
         }
     }

@@ -43,30 +43,29 @@ namespace Interview.Controllers
 
             var product = new Product 
             { 
-                ProductName = dto.ProductName,
+                ProductName = dto.ProductName,            
+                SupplierID = dto.SupplierID,
+                CategoryID = dto.CategoryID,
+                QuantityPerUnit = dto.QuantityPerUnit,
                 UnitPrice = dto.UnitPrice,
-                UnitsInStock = dto.UnitsInStock
+                UnitsInStock = dto.UnitsInStock,
+                UnitsOnOrder = dto.UnitsOnOrder,
+                ReorderLevel = dto.ReorderLevel,
+                Discontinued = dto.Discontinued
             };
 
             var created = await _repository.CreateProductAsync(product);
-            return CreatedAtAction(nameof(GetProductById), new { id = created.ProductId }, created);
+            return CreatedAtAction(nameof(GetProductById), new { id = created.ProductID }, created);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProduct(int id, [FromBody] ProductCreateDto dto)
-        {
-            var product = new Product
-            {
-                ProductName = dto.ProductName,
-                UnitPrice = dto.UnitPrice,
-                UnitsInStock = dto.UnitsInStock
-            };
-
-            if (id != product.ProductId) 
+        public async Task<IActionResult> UpdateProduct(int id, Product product)
+        {          
+            if (id != product.ProductID)
             {
                 return BadRequest();
             }
-            
+
             await _repository.UpdateProductAsync(product);
             return NoContent();
         }

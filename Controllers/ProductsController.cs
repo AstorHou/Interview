@@ -41,6 +41,16 @@ namespace Interview.Controllers
                 return BadRequest("ProductName為必填");
             }
 
+            if(dto.SupplierID == 0)
+            {
+                return BadRequest("SupplierID不得為0");
+            }
+
+            if(dto.CategoryID == 0)
+            {
+                return BadRequest("CategoryID不得為0");
+            }
+
             var product = new Product 
             { 
                 ProductName = dto.ProductName,            

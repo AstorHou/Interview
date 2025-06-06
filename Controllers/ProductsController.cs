@@ -44,8 +44,8 @@ namespace Interview.Controllers
             var product = new Product 
             { 
                 ProductName = dto.ProductName,            
-                SupplierID = dto.SupplierID,
-                CategoryID = dto.CategoryID,
+                SupplierId = dto.SupplierID,
+                CategoryId = dto.CategoryID,
                 QuantityPerUnit = dto.QuantityPerUnit,
                 UnitPrice = dto.UnitPrice,
                 UnitsInStock = dto.UnitsInStock,
@@ -55,13 +55,13 @@ namespace Interview.Controllers
             };
 
             var created = await _repository.CreateProductAsync(product);
-            return CreatedAtAction(nameof(GetProductById), new { id = created.ProductID }, created);
+            return CreatedAtAction(nameof(GetProductById), new { id = created.ProductId }, created);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(int id, Product product)
         {          
-            if (id != product.ProductID)
+            if (id != product.ProductId)
             {
                 return BadRequest();
             }
